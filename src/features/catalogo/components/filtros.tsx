@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
-import { Categoria } from "@/types/produto"
+import { Categoria } from "../../../types/produto"
 
 export function Filtros({ categorias }: { categorias: Categoria[] }) {
   const router = useRouter()

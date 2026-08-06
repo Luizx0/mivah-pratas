@@ -1,4 +1,4 @@
-import { Produto } from "@/types/produto"
+import { Produto } from "../../../types/produto"
 import { CardProduto } from "./card-produto"
 
 export function GradeProdutos({ produtos }: { produtos: Produto[] }) {

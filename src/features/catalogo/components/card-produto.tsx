@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Produto } from "@/types/produto"
+import { Produto } from "../../../types/produto"
 
 export function CardProduto({ produto }: { produto: Produto }) {
   return (

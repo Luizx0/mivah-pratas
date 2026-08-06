@@ -1,5 +1,5 @@
-import { createClient } from "@/services/supabase/server"
-import { FiltrosCatalogo } from "@/types/produto"
+import { createClient } from "../../../services/supabase/server"
+import { FiltrosCatalogo } from "../../../types/produto"
 
 const ITENS_POR_PAGINA = 12
 
