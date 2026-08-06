@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
 import { Montserrat, Playfair_Display } from "next/font/google"
 import "./globals.css"
-import { Header } from "@/components/shared/header"
-import { Footer } from "@/components/shared/footer"
-import { WhatsappButton } from "@/components/shared/whatsapp-button"
+import { Header } from "../components/shared/header"
+import { Footer } from "../components/shared/footer"
+import { WhatsappButton } from "../components/shared/whatsapp-button"
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",

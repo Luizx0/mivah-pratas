@@ -9,13 +9,13 @@ export default function Home() {
           Joias atemporais, feitas para acompanhar sua história.
         </p>
         <div className="mt-10 flex gap-4">
-          
+          <a
             href="/catalogo"
             className="bg-primary text-primary-foreground px-8 py-3 rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
           >
             Comprar Agora
           </a>
-          
+          <a
             href="/sobre"
             className="border border-border px-8 py-3 rounded-md text-sm font-medium hover:bg-muted transition-colors"
           >
