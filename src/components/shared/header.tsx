@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { FaInstagram } from "react-icons/fa";
 
 const links = [
   { href: "/catalogo", label: "Catálogo" },
@@ -14,7 +15,8 @@ export function Header() {
         <Link href="/" className="font-heading text-2xl text-primary tracking-wide">
           MIVAH
         </Link>
-        <nav className="hidden md:flex gap-8">
+
+        <nav className="hidden md:flex items-center gap-8">
           {links.map((link) => (
             <Link
               key={link.href}
@@ -25,6 +27,16 @@ export function Header() {
             </Link>
           ))}
         </nav>
+
+        <a
+          href="https://www.instagram.com/mivahpratas"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram da MIVAH Pratas"
+          className="text-foreground hover:text-primary transition-colors"
+        >
+          <FaInstagram size={20} strokeWidth={1.5} />
+        </a>
       </div>
     </header>
   )
