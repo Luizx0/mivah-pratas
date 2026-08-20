@@ -39,6 +39,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR">
+      <head>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -50,7 +51,8 @@ export default function RootLayout({
             description: "Joias em prata premium.",
           }),
         }}
-      />
+        />
+        </head>
       <body className={`${montserrat.variable} ${playfair.variable} antialiased`}>
         <Header />
         {children}
