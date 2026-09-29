@@ -1,7 +1,7 @@
-import { buscarProdutos, buscarCategorias } from "../../features/catalogo/services/produtos.service"
-import { GradeProdutos } from "../../features/catalogo/components/grade-produtos"
-import { Filtros } from "../../features/catalogo/components/filtros"
-import { Paginacao } from "../../features/catalogo/components/paginacao"
+import { buscarProdutos, buscarCategorias } from "@/features/catalogo/services/produtos.service"
+import { GradeProdutos } from "@/features/catalogo/components/grade-produtos"
+import { Filtros } from "@/features/catalogo/components/filtros"
+import { Paginacao } from "@/features/catalogo/components/paginacao"
 
 export const metadata = {
   title: "Catálogo",

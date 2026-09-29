@@ -1,44 +1,16 @@
-import { createClient } from "../../../services/supabase/server"
+import { produtosMock } from "@/features/catalogo/data/produtos-mock"
 
 export async function buscarProdutoPorSlug(slug: string) {
-  const supabase = await createClient()
-
-  const { data, error } = await supabase
-    .from("produtos")
-    .select("*, categorias(nome, slug)")
-    .eq("slug", slug)
-    .eq("ativo", true)
-    .single()
-
-  if (error) {
-    console.error("Erro ao buscar produto:", error.message)
-    return null
-  }
-
-  return data
+  const produto = produtosMock.find((p) => p.slug === slug && p.ativo)
+  return produto ?? null
 }
 
 export async function buscarProdutosRelacionados(categoriaId: string, produtoIdAtual: string) {
-  const supabase = await createClient()
-
-  const { data, error } = await supabase
-    .from("produtos")
-    .select("*")
-    .eq("categoria_id", categoriaId)
-    .eq("ativo", true)
-    .neq("id", produtoIdAtual)
-    .limit(4)
-
-  if (error) {
-    console.error("Erro ao buscar relacionados:", error.message)
-    return []
-  }
-
-  return data
+  return produtosMock
+    .filter((p) => p.categoria_id === categoriaId && p.id !== produtoIdAtual && p.ativo)
+    .slice(0, 4)
 }
 
 export async function buscarTodosSlugs() {
-  const supabase = await createClient()
-  const { data } = await supabase.from("produtos").select("slug").eq("ativo", true)
-  return data ?? []
+  return produtosMock.filter((p) => p.ativo).map((p) => ({ slug: p.slug }))
 }

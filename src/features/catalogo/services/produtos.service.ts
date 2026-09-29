@@ -1,65 +1,49 @@
-import { createClient } from "../../../services/supabase/server"
-import { FiltrosCatalogo } from "../../../types/produto"
+import { produtosMock, categoriasMock } from "@/features/catalogo/data/produtos-mock"
+import { FiltrosCatalogo } from "@/types/produto"
 
 const ITENS_POR_PAGINA = 12
 
 export async function buscarProdutos(filtros: FiltrosCatalogo = {}) {
-  const supabase = await createClient()
-  const pagina = filtros.pagina ?? 1
-  const inicio = (pagina - 1) * ITENS_POR_PAGINA
-  const fim = inicio + ITENS_POR_PAGINA - 1
-
-  let query = supabase
-    .from("produtos")
-    .select("*, categorias(nome, slug)", { count: "exact" })
-    .eq("ativo", true)
-    .range(inicio, fim)
+  let resultado = produtosMock.filter((p) => p.ativo)
 
   if (filtros.categoria) {
-    query = query.eq("categorias.slug", filtros.categoria)
+    resultado = resultado.filter((p) => p.categorias?.slug === filtros.categoria)
   }
 
   if (filtros.precoMin !== undefined) {
-    query = query.gte("preco", filtros.precoMin)
+    resultado = resultado.filter((p) => p.preco >= filtros.precoMin!)
   }
 
   if (filtros.precoMax !== undefined) {
-    query = query.lte("preco", filtros.precoMax)
+    resultado = resultado.filter((p) => p.preco <= filtros.precoMax!)
   }
 
   if (filtros.busca) {
-    query = query.ilike("nome", `%${filtros.busca}%`)
+    const termo = filtros.busca.toLowerCase()
+    resultado = resultado.filter((p) => p.nome.toLowerCase().includes(termo))
   }
 
   switch (filtros.ordenacao) {
     case "menor-preco":
-      query = query.order("preco", { ascending: true })
+      resultado = [...resultado].sort((a, b) => a.preco - b.preco)
       break
     case "maior-preco":
-      query = query.order("preco", { ascending: false })
+      resultado = [...resultado].sort((a, b) => b.preco - a.preco)
       break
     default:
-      query = query.order("created_at", { ascending: false })
+      resultado = [...resultado].sort(
+        (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      )
   }
 
-  const { data, count, error } = await query
+  const total = resultado.length
+  const pagina = filtros.pagina ?? 1
+  const inicio = (pagina - 1) * ITENS_POR_PAGINA
+  const fim = inicio + ITENS_POR_PAGINA
 
-  if (error) {
-    console.error("Erro ao buscar produtos:", error.message)
-    return { produtos: [], total: 0 }
-  }
-
-  return { produtos: data ?? [], total: count ?? 0 }
+  return { produtos: resultado.slice(inicio, fim), total }
 }
 
 export async function buscarCategorias() {
-  const supabase = await createClient()
-  const { data, error } = await supabase.from("categorias").select("*")
-
-  if (error) {
-    console.error("Erro ao buscar categorias:", error.message)
-    return []
-  }
-
-  return data
+  return categoriasMock
 }
